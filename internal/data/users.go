@@ -62,7 +62,7 @@ func ValidateEmail(v *validator.Validator, email string) {
 
 func ValidatePasswordPlaintext(v *validator.Validator, password string) {
 	v.Check(password != "", "password", "must be provided")
-	v.Check(len(password) > 8, "password", "must be at least 8 bytes long")
+	v.Check(len(password) >= 8, "password", "must be at least 8 bytes long")
 	v.Check(len(password) < 72, "password", "must not be more than 72 bytes long")
 }
 
@@ -91,7 +91,7 @@ func (m UserModel) Insert(user *User) error {
 		VALUES ($1, $2, $3, $4)
 		RETURNING id, created_at, version`
 
-	args := []any{user.Name, user.Email, user.Password, user.Activated}
+	args := []any{user.Name, user.Email, user.Password.hash, user.Activated}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
