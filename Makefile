@@ -20,7 +20,7 @@ confirm:
 
 ## run/api: run the cmd/api application
 run/api:
-	@go run ./cmd/api -db-dsn=${GREENLIGHT_DB_DSN}
+	@go run ./cmd/api -db-dsn=${GREENLIGHT_DB_DSN} -jwt-secret=${JWT_SECRET}
 
 ## db/psql: connect to the database using psql
 db/psql:
